@@ -1,0 +1,33 @@
+## callback ##
+
+
+1. 비동기 동작은 다양함. 스크립트나 모듈을 로딩하는 것도 비동기 동작.
+-----------------------------------------------------
+function loadScript(src){
+  let script = document.createElement('script');
+  script.src = src;
+  document.head.append(script)
+}
+...
+loadScript('/my/script.js');
+myScriptFnc();
+-----------------------------------------------------
+  * docucment.createElement('script')
+      => <script></script> 생성됨
+  * script.src = src
+      => <script src="/my/script.js">
+  * loadScript(...) 아래 myScriptFnc()는 loadScript(...)가 완료되는것을 기다리지 않음
+
+
+
+2. loadScript가 로딩이 다 완료되었는지 알 수 있는 방법이 필요.
+    => loadScript 내부에, 로딩이 완료되었을 경우 실행될 함수인 callback 함수를 추가. 
+        *callback함수란, 나중에 실행할 함수 라는 뜻..
+-----------------------------------------------------
+function loadScript(src){
+  let script = document.createElement('script');
+  script.src = src;
+  script.onload = () => callback(script);
+  document.head.append(script)
+}
+    
